@@ -189,23 +189,16 @@ public:
 int main(){
  
 
-    // // initialize_array(volume);
-
-
-    // auto start = std::chrono::high_resolution_clock::now();
-    // // move_right();
     // initialize_array(volume);
-    // auto stop = std::chrono::high_resolution_clock::now();
-    // auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-
-    // cout << "the time is: " << duration.count() << " milliseconds." << std::endl;
 
 
+    auto start = std::chrono::high_resolution_clock::now();
+    // move_right();
+    initialize_array(volume);
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
 
-
-
-
-
+    cout << "the time is: " << duration.count() << " microseconds." << std::endl;
 
     cout<< "hollow world" << endl;
 
@@ -230,27 +223,27 @@ int main(){
 
 
     // //link_list_method 
-    // map_2D Map;
-    // auto start = std::chrono::high_resolution_clock::now();
-    // pair<voxel_node*, voxel_node*> head_tail = Map.initialize_a_range(number,check,TOTAL_LENGTH);
-    // auto stop = std::chrono::high_resolution_clock::now();
-    // auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
-    // cout << "the time used to initialize the mao is: " << duration.count() << " milliseconds." << endl;
+    map_2D Map;
+    start = std::chrono::high_resolution_clock::now();
+    pair<voxel_node*, voxel_node*> head_tail = Map.initialize_a_range(number,check,TOTAL_LENGTH);
+    stop = std::chrono::high_resolution_clock::now();
+    duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
+    cout << "the time used to initialize the mao is: " << duration.count() << " microseconds." << endl;
 
-    // Map.head = head_tail.first;
-    // Map.tail = head_tail.second;
-    // // cout << "---> " << Map.tail->number << endl;
-    // // Map.displayTable(length, length);
+    Map.head = head_tail.first;
+    Map.tail = head_tail.second;
+    // cout << "---> " << Map.tail->number << endl;
+    // Map.displayTable(length, length);
 
-    // auto start1 = std::chrono::high_resolution_clock::now();
-    // Map.map_move_to_south(new_number,new_chceck, length);
-    // auto stop1 = std::chrono::high_resolution_clock::now();
-    // auto duration1 = std::chrono::duration_cast<std::chrono::milliseconds>(stop1 - start1);
-    // cout << "the time used update the new array is: " << duration1.count() << " milliseconds." << endl;
+    auto start1 = std::chrono::high_resolution_clock::now();
+    Map.map_move_to_south(new_number,new_chceck, length);
+    auto stop1 = std::chrono::high_resolution_clock::now();
+    auto duration1 = std::chrono::duration_cast<std::chrono::microseconds>(stop1 - start1);
+    cout << "the time used update the new array is: " << duration1.count() << " microseconds." << endl;
 
-    // // cout << endl << endl << endl;
+    // cout << endl << endl << endl;
 
-    // // Map.displayTable(length, length);
+    // Map.displayTable(length, length);
 
 
     return 0 ;
