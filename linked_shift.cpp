@@ -4,13 +4,14 @@
 #include <ctime>
 #include <chrono>
 #include <list>
+#include <array>
 
 using namespace std;
 
 //constant 
-const int length = 1000;
-const int threshold = 50;
-const int TOTAL_LENGTH = length*length;
+constexpr const int length = 1000;
+constexpr const int threshold = 50;
+constexpr const int TOTAL_LENGTH = length*length;
 
 
 //struct
@@ -24,12 +25,16 @@ struct voxel{
     bool check;
 
     voxel()
-        : number(1), check(true)
+        : number(0), check(false)
     {}
 
     voxel(int _n, bool _c)
         : number(_n), check(_c)
     {}
+
+    friend ostream& operator<<(ostream &out, const voxel &v) {
+        return out << "(" << v.number << "," << v.check << ")";
+    }
 };
 
 voxel new_volume[length*length];
@@ -88,25 +93,38 @@ void move_right (){
     // std::cout <<"the size of the new_volume is " << new_volume.size() << std::endl;
     array_copy(volume, new_volume);
 }
- 
+
+
+typedef list<array<voxel, length>> VoxelMap;
 
 class Map{
 public:
-    list<voxel> voxels;
+    VoxelMap voxels;
 
-    void createNRows(int N){
+    inline void createNRows(int N = 1){
         for (int i = 0; i < N; i++)
-            voxels.emplace_back(0, false);
+            voxels.emplace_back();
     }
 
-    void deleteRow(list<voxel>::iterator start_pointer){
-        list<voxel>::iterator end_pointer(start_pointer);
-        std::advance(end_pointer, length);
+    void initialize(){
+        for(int i=0;i<length;i++){
+            array<voxel, length> arr;
+            for(int j=0;j<length;j++){
+                arr[j].number = i * length + j;
+                arr[j].check = true;
+            }
+            voxels.push_back(arr);
+        }
+    }
+
+    void deleteRow(VoxelMap::iterator start_pointer){
+        VoxelMap::iterator end_pointer(start_pointer);
+        end_pointer++;
         voxels.erase(start_pointer, end_pointer);
     }
 
     void shiftSouth(){ 
-        list<voxel>::iterator head = voxels.begin();
+        VoxelMap::iterator head = voxels.begin();
         std::advance(head, length);
         auto start = std::chrono::high_resolution_clock::now();
         deleteRow(voxels.begin());
@@ -115,7 +133,7 @@ public:
         cout << "delete " << duration.count() << " microseconds" << endl;
 
         start = std::chrono::high_resolution_clock::now();
-        createNRows(length);
+        createNRows();
         stop = std::chrono::high_resolution_clock::now();
         duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
         cout << "init " << duration.count() << " microseconds" << endl;
@@ -123,17 +141,14 @@ public:
 
     // Display the linked list in a table format
     void displayTable(int r, int c) {
-        list<voxel>::iterator temp = voxels.begin();
+        VoxelMap::iterator temp = voxels.begin();
 
         for (int i = 0; i < r; ++i) {
-            for (int j = 0; j < c; ++j) {
-                if (temp != voxels.end()) {
-                    std::cout << temp->number << " ";
-                    temp++;
-                } else {
-                    std::cout << "- ";
-                }
+            array<voxel, length> arr = *temp;
+            for(int j=0;j<c;j++){
+                cout << arr[j] << " ";
             }
+            temp++;
             std::cout << std::endl;
         }
     }
@@ -154,13 +169,13 @@ int main(){
 
     Map map;
     start = std::chrono::high_resolution_clock::now();
-    map.createNRows(TOTAL_LENGTH);
+    map.initialize();
     stop = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
     cout << "Init LINKED: " << duration.count() << " microseconds." << endl;
 
     // cout << "---> " << endl;
-    // Map.displayTable(length, length);
+    // map.displayTable(length, length);
 
     auto start1 = std::chrono::high_resolution_clock::now();
     map.shiftSouth();

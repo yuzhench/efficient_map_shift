@@ -8,7 +8,7 @@
             "name": "(lldb) Linked",
             "type": "cppdbg",
             "request": "launch",
-            "program": "$(workspaceFolder)/linked",
+            "program": "linked",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
