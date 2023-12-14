@@ -380,6 +380,43 @@ public:
 
 
 
+class map_3D {
+public: 
+    voxel_node* head;
+    voxel_node* tail;
+
+    vector<vector <voxel_node*>> row_old_starts;
+    vector<vector <voxel_node*>> row_new_starts;
+
+    vector<vector <voxel_node*>> row_old_ends;
+    vector<vector <voxel_node*>> row_new_ends;
+
+    vector<vector <voxel_node*>> new_map_starts;
+
+    pair<voxel_node*, voxel_node*> initialize_a_range(int number_array [],bool check_array [], int size){// the size here should be length*length*length
+        
+    }
+
+    void move_left(){
+
+    }
+
+    void move_right(){
+
+    }
+
+    void move_front(){
+
+    }
+
+    void move_forward(){
+
+    }
+
+};
+
+
+
 int main(){
  
 
